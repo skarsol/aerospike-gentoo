@@ -1,0 +1,13 @@
+diff --git a/src/client/php_client_utils.c b/src/client/php_client_utils.c
+index eb0963f..3f436de 100644
+--- a/src/client/php_client_utils.c
++++ b/src/client/php_client_utils.c
+@@ -102,7 +102,7 @@ void set_policy_defaults_from_ini(as_config* config, AerospikeClient* client) {
+
+        lua_system_path_str = INI_STR("aerospike.udf.lua_system_path");
+        if (lua_system_path_str && strlen(lua_system_path_str) < AS_CONFIG_PATH_MAX_SIZE) {
+-               strcpy(config->lua.system_path, lua_system_path_str);
++//             strcpy(config->lua.system_path, lua_system_path_str);
+        }
+
+        int_ini_value = INI_INT("aerospike.serializer");

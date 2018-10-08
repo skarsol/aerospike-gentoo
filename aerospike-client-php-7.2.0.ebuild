@@ -14,19 +14,19 @@ KEYWORDS="~amd64"
 
 SLOT="0"
 
-RDEPEND=""
+# PHP client doesn't seem to be able to use the event libraries, possibly PHP issue?
+RDEPEND="dev-db/aerospike-client-c[-libev,-libevent,-libuv]"
 DEPEND="${RDEPEND}"
 
 src_configure() {
         cd src
         phpize
         ./configure --enable-aerospike
-
 }
 
 src_compile() {
         cd src
-        emake DOWNLOAD_C_CLIENT=0 AEROSPIKE_LUA_PATH=../modules/aerospike-lua-core/src/ -j1 all
+        DOWNLOAD_C_CLIENT=0 LUA_SYSPATH=${D}/opt/aerospike/sys/udf/lua LUA_USERPATH=${D}/opt/aerospike/usr/udf/lua ./build.sh
 }
 
 src_install() {

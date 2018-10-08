@@ -1,3 +1,4 @@
+
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
@@ -15,16 +16,15 @@ KEYWORDS="~amd64"
 
 SLOT="0"
 
+
 RDEPEND="libev? ( dev-libs/libev )
         libuv? ( dev-libs/libuv )
-        libevent? ( dev-libs/libevent )
-        dev-lang/lua"
+        libevent? ( dev-libs/libevent )"
 DEPEND="${RDEPEND}"
 
 IUSE="libuv libev libevent"
 
 REQUIRED_USE="?? ( libuv libev libevent )"
-
 
 src_compile() {
         if use libev ; then
@@ -35,11 +35,13 @@ src_compile() {
                 EV_LIB=libevent
         fi
 
-# Compile fails under -j5
-        emake -j1 EVENT_LIB=${EV_LIB} USE_LUAMOD=0
-
+#       emake -j1 EVENT_LIB=${EV_LIB} USE_LUAMOD=0
+# Looks like the PHP client cant handle external lua...
+        emake -j1 EVENT_LIB=${EV_LIB}
 }
 
 src_install() {
-        emake INSTALL_PREFIX="${D}/usr/" install
+
+#       emake install INSTALL_PREFIX="${D}/usr/" EVENT_LIB=${EV_LIB} USE_LUAMOD=0
+        emake install INSTALL_PREFIX="${D}/usr/" EVENT_LIB=${EV_LIB}
 }
